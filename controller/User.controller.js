@@ -38,7 +38,7 @@ exports.createUser = async (req, res) => {
       return res.status(207).json({
         errorcode: 3,
         status: false,
-        message: "Password must contain at least one alphabet character, one numeric character, and one special symbol.",
+        message: "Password must contain at least one alphabet character, one numeric character, and one special symbol",
         data: null,
       });
     }
