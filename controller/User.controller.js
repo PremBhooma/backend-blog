@@ -6,7 +6,7 @@ exports.createUser = async (req, res) => {
   try {
     let { name, email, number, password } = req.body;
 
-    if (!name || !email || number || !password) {
+    if (!name || !email || !number || !password) {
       return res.status(207).json({
         errorcode: 1,
         status: false,
@@ -63,6 +63,7 @@ exports.createUser = async (req, res) => {
       data: new_user,
     });
   } catch (error) {
+    console.log("error", error);
     return res.status(500).json({
       errorcode: 5,
       status: false,
@@ -76,8 +77,8 @@ exports.userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    let existingUser = await User.findOne({ email: email });
-    if (!existingUser)
+    let user = await User.findOne({ email: email });
+    if (!user)
       return res.status(207).json({
         errorcode: 1,
         status: false,
@@ -85,7 +86,7 @@ exports.userLogin = async (req, res) => {
         data: null,
       });
 
-    let cmpPassword = bcrypt.compareSync(password, existingUser.password);
+    let cmpPassword = bcrypt.compareSync(password, user.password);
     if (!cmpPassword) {
       return res.status(207).json({
         errorcode: 2,
@@ -94,12 +95,12 @@ exports.userLogin = async (req, res) => {
         data: null,
       });
     } else {
-      const token = jwt.sign({ userid: existingUser }, process.env.JWT_SECRET, { expiresIn: "30s" });
+      const token = jwt.sign({ userid: user }, process.env.JWT_SECRET, { expiresIn: "30s" });
       return res.status(201).json({
         errorcode: 0,
         status: true,
         message: "User Login Successfully",
-        data: { existingUser, token },
+        data: { user, token },
       });
     }
   } catch (error) {

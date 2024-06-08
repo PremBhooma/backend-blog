@@ -19,7 +19,6 @@ app.get("/", (req, res) => {
   res.send("HomeRoute is running");
 });
 
-// app.use("/blogs", blogRouter);
 app.use("/api/user", UserRouter);
 
 const PORT = process.env.PORT || 5000;
