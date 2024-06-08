@@ -15,6 +15,15 @@ exports.createUser = async (req, res) => {
       });
     }
 
+    let userExit = await User.findOne({ email: email });
+    if (userExit)
+      return res.status(207).json({
+        errorcode: 6,
+        status: false,
+        message: "Email already exist",
+        data: null,
+      });
+
     if (password.length < 4 || password.length > 10) {
       return res.status(207).json({
         errorcode: 2,
