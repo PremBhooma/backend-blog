@@ -19,7 +19,7 @@ const getFileKey = (file, folder) => {
   return `${folder}/${name}`;
 };
 
-const uploadS3AdminProfile = multer({
+const uploadS3BlogImage = multer({
   storage: multerS3({
     s3: s3,
     bucket: BUCKET_NAME,
@@ -27,10 +27,10 @@ const uploadS3AdminProfile = multer({
     contentType: multerS3.AUTO_CONTENT_TYPE,
     serverSideEncryption: "AES256",
     cacheControl: "max-age=31536000",
-    key: (req, file, cb) => cb(null, getFileKey(file, "admin")),
+    key: (req, file, cb) => cb(null, getFileKey(file, "Blog")),
   }),
 });
 
 module.exports = {
-  uploadS3AdminProfile: uploadS3AdminProfile,
+  uploadS3BlogImage: uploadS3BlogImage,
 };

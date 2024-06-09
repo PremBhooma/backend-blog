@@ -4,6 +4,7 @@ const cors = require("cors");
 const { connection } = require("./config/db");
 
 const UserRouter = require("./routes/User.routes");
+const BlogRouter = require("./routes/Blog.routes");
 
 require("dotenv").config();
 
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", UserRouter);
+app.use("/api/blog", BlogRouter);
 
 const PORT = process.env.PORT || 5000;
 
